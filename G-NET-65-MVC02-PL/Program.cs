@@ -21,7 +21,8 @@ namespace G_NET_65_MVC02_PL
                 option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
             //builder.Services.AddScoped<IPlanRepository, MockRepository>();
-            builder.Services.AddScoped<IPlanRepository, PlanRepository>();
+            //builder.Services.AddScoped<IPlanRepository, PlanRepository>();
+            //builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             #endregion
 
             var app = builder.Build();
