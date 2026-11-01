@@ -168,9 +168,9 @@ namespace G_NET_65_MVC02.BLL.Services.Classes
         {
             var Member = await _memberRepository.GetByIdAsync(memberId, ct);
             if (Member is null) return false;
-            if(await _memberRepository.AnyAsync(x => x.Email == model.Email && x.Id != memberId, ct)
+            if(await _memberRepository.AnyAsync(x => x.Email == model.Email && x.Id != memberId, ct))
                return false;
-            if(await _memberRepository.AnyAsync(x => x.PhoneNumber == model.PhoneNumber && x.Id != memberId, ct)
+            if(await _memberRepository.AnyAsync(x => x.PhoneNumber == model.PhoneNumber && x.Id != memberId, ct))
                return false;
             Member.Email = model.Email;
             Member.PhoneNumber = model.PhoneNumber;
