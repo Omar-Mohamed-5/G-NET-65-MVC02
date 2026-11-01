@@ -1,6 +1,7 @@
 ﻿using G_NET_65_MVC02.BLL.Services.Interfaces;
 using G_NET_65_MVC02.BLL.ViewModels.MemberViewModels;
 using G_NET_65_MVC02.DAL.Models;
+using G_NET_65_MVC02.DAL.Repositories.Classes;
 using G_NET_65_MVC02.DAL.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -16,16 +17,23 @@ namespace G_NET_65_MVC02.BLL.Services.Classes
         private readonly IGenericRepository<MemberShip> _memberShipRepository;
         private readonly IGenericRepository<Plan> _planRepository;
         private readonly IGenericRepository<HealthRecord> _healthRecordRepository;
+        private readonly IGenericRepository<Booking> _bookingRepository;
 
         public MemberService(IGenericRepository<Member> MemberRepository, 
             IGenericRepository<MemberShip> MemberShipRepository,
-            IGenericRepository<Plan> PlanRepository, IGenericRepository<HealthRecord> HealthRecordRepository)
+            IGenericRepository<Plan> PlanRepository,
+            IGenericRepository<HealthRecord> HealthRecordRepository,
+            IGenericRepository<Booking> BookingRepository)
         {
             _memberRepository = MemberRepository;
             _memberShipRepository = MemberShipRepository;
             _planRepository = PlanRepository;
             _healthRecordRepository = HealthRecordRepository;
+            _bookingRepository = BookingRepository;
         }
+
+
+
         public async Task<bool> CreateMemberAsync(CreateMemberViewModel model, CancellationToken ct = default)
         {
             var EmailExists = await _memberRepository.AnyAsync(x => x.Email == model.Email, ct);
@@ -59,6 +67,8 @@ namespace G_NET_65_MVC02.BLL.Services.Classes
             return Result > 0;
         }
 
+
+
         public async Task<IEnumerable<MemberViewModel>> GetAllMembersAsync(CancellationToken ct = default)
         {
             var Members = await _memberRepository.GetAllAsync(ct:ct);
@@ -75,18 +85,20 @@ namespace G_NET_65_MVC02.BLL.Services.Classes
             return MembersViewModel;
         }
 
+
+
         public async Task<MemberViewModel?> GetMemberDetailsAsync(int memberId, CancellationToken ct = default)
         {
-            var Member = _memberRepository.GetByIdAsync(memberId, ct);
+            var Member = await _memberRepository.GetByIdAsync(memberId, ct);
             if (Member is null) return null;
             var ViewModel = new MemberViewModel
             {
-                Name = Member.Result.Name,
-                Email = Member.Result.Email,
-                PhoneNumber = Member.Result.PhoneNumber,
-                DateOfBirth = Member.Result.DateOfBirth.ToShortDateString(),
-                Gender = Member.Result.Gender.ToString(),
-                Address = $"{Member.Result.Address.BuildingNumber}, {Member.Result.Address.Street}, {Member.Result.Address.City}"
+                Name = Member.Name,
+                Email = Member.Email,
+                PhoneNumber = Member.PhoneNumber,
+                DateOfBirth = Member.DateOfBirth.ToShortDateString(),
+                Gender = Member.Gender.ToString(),
+                Address = $"{Member.Address.BuildingNumber}, {Member.Address.Street}, {Member.Address.City}"
             };
             var ActiveMemberShip = await _memberShipRepository.FirstOrDefaultAsync(m => m.MemperId == memberId && m.IsActive, ct:ct);
             if(ActiveMemberShip is not null)
@@ -99,24 +111,75 @@ namespace G_NET_65_MVC02.BLL.Services.Classes
             return ViewModel;
         }
 
-        public Task<HealthRecordViewModel?> GetMemberHealthRecordAsync(int memberId, CancellationToken ct = default)
+
+
+        public async Task<HealthRecordViewModel?> GetMemberHealthRecordAsync(int memberId, CancellationToken ct = default)
         {
-            throw new NotImplementedException();
+            var Record = await _healthRecordRepository.FirstOrDefaultAsync(x => x.MemberId == memberId, ct:ct);
+            if (Record is null) return null;
+            else
+            {
+                return new HealthRecordViewModel()
+                {
+                    Height = Record.Height,
+                    Weight = Record.Weight,
+                    BloodType = Record.BloodType,
+                    Note = Record.Note
+                };
+            }
         }
 
-        public Task<MemberToUpdateViewModel?> GetMemberToUpdateAsync(int memberId, CancellationToken ct = default)
+
+
+        public async Task<MemberToUpdateViewModel?> GetMemberToUpdateAsync(int memberId, CancellationToken ct = default)
         {
-            throw new NotImplementedException();
+            var Member = await _memberRepository.GetByIdAsync(memberId, ct);
+            if (Member is null) return null;
+            else
+            {
+                return new MemberToUpdateViewModel()
+                {
+                    Name = Member.Name,
+                    Email = Member.Email,
+                    PhoneNumber = Member.PhoneNumber,
+                    Street = Member.Address.Street,
+                    City = Member.Address.City,
+                    BuildingNumber = Member.Address.BuildingNumber,
+                    Photo = Member.Photo
+                };
+            }
         }
 
-        public Task<bool> RemoveMemberAsync(int memberId, CancellationToken ct = default)
+
+
+        public async Task<bool> RemoveMemberAsync(int memberId, CancellationToken ct = default)
         {
-            throw new NotImplementedException();
+            var Member = await _memberRepository.GetByIdAsync(memberId, ct);
+            if (Member is null) return false;
+            var HasFutureSessions = await _bookingRepository.AnyAsync(x => x.MemberId == memberId && x.Session.StartDate > DateTime.Now, ct);
+            if (HasFutureSessions) return false;
+            var Result = await _memberRepository.DeleteAsync(Member);
+            return Result > 0;
         }
 
-        public Task<bool> UpdateMemberDetailsAsync(int memberId, MemberToUpdateViewModel model, CancellationToken ct = default)
+
+
+        public async Task<bool> UpdateMemberDetailsAsync(int memberId, MemberToUpdateViewModel model, CancellationToken ct = default)
         {
-            throw new NotImplementedException();
+            var Member = await _memberRepository.GetByIdAsync(memberId, ct);
+            if (Member is null) return false;
+            if(await _memberRepository.AnyAsync(x => x.Email == model.Email && x.Id != memberId, ct)
+               return false;
+            if(await _memberRepository.AnyAsync(x => x.PhoneNumber == model.PhoneNumber && x.Id != memberId, ct)
+               return false;
+            Member.Email = model.Email;
+            Member.PhoneNumber = model.PhoneNumber;
+            Member.Address.City = model.City;
+            Member.Address.Street = model.Street;
+            Member.Address.BuildingNumber = model.BuildingNumber;
+            Member.UpdatedAt = DateTime.Now;
+            var Result = await _memberRepository.UpdateAsync(Member);
+            return Result > 0 ? true : false;
         }
     }
 }
