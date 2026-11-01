@@ -1,4 +1,5 @@
-﻿using System;
+﻿using G_NET_65_MVC02.BLL.ViewModels.MemberViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,14 @@ using System.Threading.Tasks;
 
 namespace G_NET_65_MVC02.BLL.Services.Interfaces
 {
-    internal interface IMemberService
+    public interface IMemberService
     {
+        Task<IEnumerable<MemberViewModel>> GetAllMembersAsync(CancellationToken ct = default);
+        Task<MemberViewModel?> GetMemberDetailsAsync(int memberId, CancellationToken ct = default);
+        Task<bool> CreateMemberAsync(CreateMemberViewModel model, CancellationToken ct = default);
+        Task<MemberToUpdateViewModel?> GetMemberToUpdateAsync(int memberId, CancellationToken ct = default);
+        Task<bool> UpdateMemberDetailsAsync(int memberId, MemberToUpdateViewModel model, CancellationToken ct = default);
+        Task<HealthRecordViewModel?> GetMemberHealthRecordAsync(int memberId, CancellationToken ct = default);
+        Task<bool> RemoveMemberAsync(int memberId, CancellationToken ct = default); 
     }
 }

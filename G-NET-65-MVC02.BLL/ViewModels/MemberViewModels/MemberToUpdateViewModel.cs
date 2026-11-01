@@ -19,7 +19,7 @@ namespace G_NET_65_MVC02.BLL.ViewModels.MemberViewModels
         [Required(ErrorMessage = "Phone Number Is Required")]
         [Phone(ErrorMessage = "Invalid phone number")]
         [RegularExpression(@"^(010|011|012|015)\d{8}$", ErrorMessage = "Phone number must be a valid Egyptian mobile number")]
-        public string Phone { get; set; } = default!;
+        public string PhoneNumber { get; set; } = default!;
 
         [Required(ErrorMessage = "Building Number Is Required")]
         [Range(1, int.MaxValue, ErrorMessage = "Building Number must be greater than 0")]

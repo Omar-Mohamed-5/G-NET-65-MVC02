@@ -1,4 +1,6 @@
 using G_NET_65_MVC01.DBContexts;
+using G_NET_65_MVC02.BLL.Services.Classes;
+using G_NET_65_MVC02.BLL.Services.Interfaces;
 using G_NET_65_MVC02.DAL.Repositories.Classes;
 using G_NET_65_MVC02.DAL.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +25,7 @@ namespace G_NET_65_MVC02_PL
             //builder.Services.AddScoped<IPlanRepository, MockRepository>();
             //builder.Services.AddScoped<IPlanRepository, PlanRepository>();
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            builder.Services.AddScoped<IMemberService, MemberService>();
             #endregion
 
             var app = builder.Build();
