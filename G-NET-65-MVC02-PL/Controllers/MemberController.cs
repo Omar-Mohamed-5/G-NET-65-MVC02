@@ -40,5 +40,14 @@ namespace G_NET_65_MVC02_PL.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
+
+
+        [HttpGet]
+        public async Task<IActionResult> MemberDetails(int id, CancellationToken ct)
+        {
+            var member = await _memberService.GetMemberDetailsAsync(id, ct);
+            if (member is null) { TempData["ErrorMessage"] = "Member not found"; return RedirectToAction(nameof(Index)); }
+            return View(member);
+        }
     }
 }
