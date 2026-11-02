@@ -101,33 +101,38 @@ namespace G_NET_65_MVC02.BLL.Services.Classes
                 Address = $"{Member.Address.BuildingNumber}, {Member.Address.Street}, {Member.Address.City}"
             };
             var ActiveMemberShip = await _memberShipRepository.FirstOrDefaultAsync(m => m.MemperId == memberId && m.IsActive, ct:ct);
-            if(ActiveMemberShip is not null)
-            {
-                var ActivePlan = await _planRepository.GetByIdAsync(ActiveMemberShip.PlanId, ct);
-                ViewModel.PlanName = ActivePlan?.Name;
-                ViewModel.MemberShipStartDate = ActiveMemberShip.CreatedAt.ToShortDateString();
-                ViewModel.MemberShipEndDate = ActiveMemberShip.EndDate.ToShortDateString();
-            }
+            //if(ActiveMemberShip is not null)
+            //{
+            //    var ActivePlan = await _planRepository.GetByIdAsync(ActiveMemberShip.PlanId, ct);
+            //    ViewModel.PlanName = ActivePlan?.Name;
+            //    ViewModel.MemberShipStartDate = ActiveMemberShip.CreatedAt.ToShortDateString();
+            //    ViewModel.MemberShipEndDate = ActiveMemberShip.EndDate.ToShortDateString();
+            //}
             return ViewModel;
         }
 
-
-
-        public async Task<HealthRecordViewModel?> GetMemberHealthRecordAsync(int memberId, CancellationToken ct = default)
+        public Task<HealthRecordViewModel?> GetMemberHealthRecordAsync(int memberId, CancellationToken ct = default)
         {
-            var Record = await _healthRecordRepository.FirstOrDefaultAsync(x => x.MemberId == memberId, ct:ct);
-            if (Record is null) return null;
-            else
-            {
-                return new HealthRecordViewModel()
-                {
-                    Height = Record.Height,
-                    Weight = Record.Weight,
-                    BloodType = Record.BloodType,
-                    Note = Record.Note
-                };
-            }
+            throw new NotImplementedException();
         }
+
+
+
+        //public async Task<HealthRecordViewModel?> GetMemberHealthRecordAsync(int memberId, CancellationToken ct = default)
+        //{
+        //    var Record = await _healthRecordRepository.FirstOrDefaultAsync(x => x.MemberId == memberId, ct:ct);
+        //    if (Record is null) return null;
+        //    else
+        //    {
+        //        return new HealthRecordViewModel()
+        //        {
+        //            Height = Record.Height,
+        //            Weight = Record.Weight,
+        //            BloodType = Record.BloodType,
+        //            Note = Record.Note
+        //        };
+        //    }
+        //}
 
 
 
