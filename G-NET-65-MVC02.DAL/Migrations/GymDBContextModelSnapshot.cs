@@ -175,7 +175,6 @@ namespace G_NET_65_MVC02.DAL.Migrations
                         .HasColumnType("varchar");
 
                     b.Property<string>("Photo")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedAt")

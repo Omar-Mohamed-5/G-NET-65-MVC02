@@ -20,10 +20,10 @@ namespace G_NET_65_MVC02.BLL.Services.Classes
         private readonly IGenericRepository<Booking> _bookingRepository;
 
         public MemberService(IGenericRepository<Member> MemberRepository, 
-            IGenericRepository<MemberShip> MemberShipRepository,
-            IGenericRepository<Plan> PlanRepository,
-            IGenericRepository<HealthRecord> HealthRecordRepository,
-            IGenericRepository<Booking> BookingRepository)
+                             IGenericRepository<MemberShip> MemberShipRepository,
+                             IGenericRepository<Plan> PlanRepository,
+                             IGenericRepository<HealthRecord> HealthRecordRepository,
+                             IGenericRepository<Booking> BookingRepository)
         {
             _memberRepository = MemberRepository;
             _memberShipRepository = MemberShipRepository;
@@ -101,7 +101,7 @@ namespace G_NET_65_MVC02.BLL.Services.Classes
                 Address = $"{Member.Address.BuildingNumber}, {Member.Address.Street}, {Member.Address.City}"
             };
             var ActiveMemberShip = await _memberShipRepository.FirstOrDefaultAsync(m => m.MemperId == memberId && m.IsActive, ct:ct);
-            //if(ActiveMemberShip is not null)
+            //if (ActiveMemberShip is not null)
             //{
             //    var ActivePlan = await _planRepository.GetByIdAsync(ActiveMemberShip.PlanId, ct);
             //    ViewModel.PlanName = ActivePlan?.Name;
