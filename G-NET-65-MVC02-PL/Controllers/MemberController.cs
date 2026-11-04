@@ -49,5 +49,65 @@ namespace G_NET_65_MVC02_PL.Controllers
             if (member is null) { TempData["ErrorMessage"] = "Member not found"; return RedirectToAction(nameof(Index)); }
             return View(member);
         }
+
+
+        [HttpGet]
+        public async Task<IActionResult> HealthRecordDetails(int id, CancellationToken ct)
+        {
+            var Record = await _memberService.GetMemberHealthRecordAsync(id, ct);
+            if (Record is null) { TempData["ErrorMessage"] = "Health record not found"; return RedirectToAction(nameof(Index)); }
+            return View(Record);
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> EditMember(int id, CancellationToken ct)
+        {
+            var member = await _memberService.GetMemberToUpdateAsync(id, ct);
+            if (member is null) { TempData["ErrorMessage"] = "Member not found"; return RedirectToAction(nameof(Index)); }
+            return View(member);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> EditMember(int id, MemberToUpdateViewModel model, CancellationToken ct)
+        {
+            if (!ModelState.IsValid) return View(model);
+            var Result = await _memberService.UpdateMemberDetailsAsync(id, model, ct);
+            if(Result)
+            {
+                TempData["SuccessMessage"] = "Member Updated Successfully";
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Failed To Update Member";
+            }
+            return View(model);
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id, CancellationToken ct)
+        {
+            var member = await _memberService.GetMemberDetailsAsync(id, ct);
+            if (member is null) { TempData["ErrorMessage"] = "Member not found"; return RedirectToAction(nameof(Index)); }
+            return View(member);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteConfirmed(int id, CancellationToken ct)
+        {
+            var Result = await _memberService.RemoveMemberAsync(id, ct);
+            if (Result)
+            {
+                TempData["SuccessMessage"] = "Member Deleted Successfully";
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Failed To Delete Member, Ensure there are no future bookings";
+            }
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
