@@ -58,7 +58,6 @@ namespace G_NET_65_MVC02.BLL.Services.Classes
             {
                 return new PlanToUpdateViewModel
                 {
-                    //Name = Plan.Name,
                     Price = Plan.Price,
                     DurationInDays = Plan.DurationDays,
                     Description = Plan.Description
@@ -70,7 +69,7 @@ namespace G_NET_65_MVC02.BLL.Services.Classes
         {
             var Plan = _planRepository.GetByIdAsync(planId, ct:ct);
             if (Plan is null) return false;
-            if(await _planRepository.AnyAsync(x => x.Name == model.Name && x.Id != planId)) return false;
+            if(await _planRepository.AnyAsync(x => x.Name == model.Name && x.Id != planId, ct)) return false;
             Plan.Result.Price = model.Price;
             Plan.Result.DurationDays = model.DurationInDays;
             Plan.Result.Description = model.Description;

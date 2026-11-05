@@ -11,35 +11,35 @@
                     <form asp-action="EditPlane" method="post">
                         <div class="row g-3">
                             <div class="col-12">
-                                <label asp-for="Name" class="form-label fw-semibold">
+                                <label asp-for="@Model.Name" class="form-label fw-semibold">
                                     Plan Name <span class="text-danger">*</span>
                                 </label>
-                                <input asp-for="Name" class="form-control" readonly />
+                                <input asp-for="@Model.Name" class="form-control" readonly />
                             </div>
 
                             <div class="col-md-6">
-                                <label asp-for="DurationInDays" class="form-label fw-semibold">
+                                <label asp-for="@Model.DurationInDays" class="form-label fw-semibold">
                                     Duration (Days) <span class="text-danger">*</span>
                                 </label>
-                                <input asp-for="DurationInDays" type="number" class="form-control" />
+                                <input asp-for="@Model.DurationInDays" type="number" class="form-control" />
                                 <small class="text-muted">e.g., 30 days = 1 month</small>
-                                <span asp-validation-for="DurationInDays" class="text-danger d-block"></span>
+                                <span asp-validation-for="@Model.DurationInDays" class="text-danger d-block"></span>
                             </div>
 
                             <div class="col-md-6">
-                                <label asp-for="Price" class="form-label fw-semibold">
+                                <label asp-for="@Model.Price" class="form-label fw-semibold">
                                     Price (EGP) <span class="text-danger">*</span>
                                 </label>
-                                <input asp-for="Price" type="number" step="0.01" class="form-control" />
-                                <span asp-validation-for="Price" class="text-danger"></span>
+                                <input asp-for="@Model.Price" type="number" step="0.01" class="form-control" />
+                                <span asp-validation-for="@Model.Price" class="text-danger"></span>
                             </div>
 
                             <div class="col-12">
-                                <label asp-for="Description" class="form-label fw-semibold">
+                                <label asp-for="@Model.Description" class="form-label fw-semibold">
                                     Description <span class="text-danger">*</span>
                                 </label>
-                                <textarea asp-for="Description" class="form-control" rows="4"></textarea>
-                                <span asp-validation-for="Description" class="text-danger"></span>
+                                <textarea asp-for="@Model.Description" class="form-control" rows="4"></textarea>
+                                <span asp-validation-for="@Model.Description" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="d-flex justify-content-between mt-4 pt-3 border-top">
