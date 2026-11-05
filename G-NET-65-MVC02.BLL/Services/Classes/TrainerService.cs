@@ -13,10 +13,13 @@ namespace G_NET_65_MVC02.BLL.Services.Classes
     public class TrainerService : ITrainerService
     {
         private readonly IGenericRepository<Trainer> _trainerRepository;
+        private readonly IGenericRepository<Session> _sessionRepository;
 
-        public TrainerService(IGenericRepository<Trainer> TrainerRepository)
+        public TrainerService(IGenericRepository<Trainer> TrainerRepository, 
+                              IGenericRepository<Session> SessionRepository)
         {
             _trainerRepository = TrainerRepository;
+            _sessionRepository = SessionRepository;
         }
         public async Task<bool> CreateTrainerAsync(CreateTrainerViewModel model, CancellationToken ct = default)
         {
@@ -70,24 +73,55 @@ namespace G_NET_65_MVC02.BLL.Services.Classes
                 PhoneNumber = Trainer.PhoneNumber,
                 DateOfBirth = Trainer.DateOfBirth.ToShortDateString(),
                 Specialties = Trainer.Specialties.ToString(),
-                Address = $"{Trainer.Address.BuildingNumber}, {Trainer.Address.Street}, {Trainer.Address.City}"
+                Address = $"{Trainer.Address.BuildingNumber} - {Trainer.Address.Street} - {Trainer.Address.City}"
             };
             return ViewModel;
         }
 
-        public Task<TrainerToUpdateViewModel?> GetTrainerToUpdateViewModel(int trainerId, CancellationToken ct = default)
+        public async Task<TrainerToUpdateViewModel?> GetTrainerToUpdateAsync(int trainerId, CancellationToken ct = default)
         {
-            throw new NotImplementedException();
+            var Trainer = await _trainerRepository.GetByIdAsync(trainerId, ct);
+            if (Trainer is null) return null;
+            else
+            {
+                return new TrainerToUpdateViewModel()
+                {
+                    Email = Trainer.Email,
+                    PhoneNumber = Trainer.PhoneNumber,
+                    BuildingNumber = Trainer.Address.BuildingNumber,
+                    Street = Trainer.Address.Street,
+                    City = Trainer.Address.City,
+                    Specialties = Trainer.Specialties
+                };
+            }
         }
 
-        public Task<bool> RemoveTrainerAsync(int trainerId, CancellationToken ct = default)
+        public async Task<bool> RemoveTrainerAsync(int trainerId, CancellationToken ct = default)
         {
-            throw new NotImplementedException();
+            var Trainer = await _trainerRepository.GetByIdAsync(trainerId,ct);
+            if (Trainer is null) return false;
+            var HasFutureSessions = await _sessionRepository.AnyAsync(x => x.TrainerId == trainerId && x.CreatedAt > DateTime.Now, ct);
+            if (HasFutureSessions) return false;
+            var Result = await _trainerRepository.DeleteAsync(Trainer);
+            return Result > 0;
         }
 
-        public Task<bool> UpdateTrainerDetailsAsync(int trainerId, TrainerToUpdateViewModel model, CancellationToken ct = default)
+        public async Task<bool> UpdateTrainerDetailsAsync(int trainerId, TrainerToUpdateViewModel model, CancellationToken ct = default)
         {
-            throw new NotImplementedException();
+            var Trainer = await _trainerRepository.GetByIdAsync(trainerId, ct);
+            if (Trainer is null) return false;
+            if(await _trainerRepository.AnyAsync(x => x.Email == model.Email && x.Id != trainerId, ct)) return false;
+            if(await _trainerRepository.AnyAsync(x => x.PhoneNumber == model.PhoneNumber && x.Id != trainerId, ct)) return false;
+
+            Trainer.Email = model.Email;
+            Trainer.PhoneNumber = model.PhoneNumber;
+            Trainer.Address.BuildingNumber = model.BuildingNumber;
+            Trainer.Address.Street = model.Street;
+            Trainer.Address.City = model.City;
+            Trainer.Specialties = model.Specialties;
+
+            var Result = await _trainerRepository.UpdateAsync(Trainer);
+            return Result > 0;
         }
     }
 }

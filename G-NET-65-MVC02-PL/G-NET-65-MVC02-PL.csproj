@@ -19,4 +19,8 @@
     <ProjectReference Include="..\G-NET-65-MVC02.BLL\G-NET-65-MVC02.BLL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Trainer\" />
+  </ItemGroup>
+
 </Project>
