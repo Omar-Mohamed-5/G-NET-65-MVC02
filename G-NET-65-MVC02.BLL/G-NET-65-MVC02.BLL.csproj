@@ -11,8 +11,4 @@
     <ProjectReference Include="..\G-NET-65-MVC02.DAL\G-NET-65-MVC02.DAL.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ViewModels\TrainerViewModels\" />
-  </ItemGroup>
-
 </Project>

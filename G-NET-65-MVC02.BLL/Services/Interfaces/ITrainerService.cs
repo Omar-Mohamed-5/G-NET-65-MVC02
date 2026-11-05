@@ -1,4 +1,5 @@
-﻿using System;
+﻿using G_NET_65_MVC02.BLL.ViewModels.TrainerViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,13 @@ using System.Threading.Tasks;
 
 namespace G_NET_65_MVC02.BLL.Services.Interfaces
 {
-    internal interface ITrainerService
+    public interface ITrainerService
     {
+        Task<IEnumerable<TrainerViewModel>> GetAllTrainersAsync(CancellationToken ct = default);
+        Task<TrainerViewModel?> GetTrainerDetailsAsync(int trainerId, CancellationToken ct = default);
+        Task<bool> CreateTrainerAsync(CreateTrainerViewModel model, CancellationToken ct = default);
+        Task<TrainerToUpdateViewModel?> GetTrainerToUpdateViewModel(int trainerId, CancellationToken ct = default);
+        Task<bool> UpdateTrainerDetailsAsync(int trainerId, TrainerToUpdateViewModel model, CancellationToken ct = default);
+        Task<bool> RemoveTrainerAsync(int trainerId, CancellationToken ct = default);
     }
 }
