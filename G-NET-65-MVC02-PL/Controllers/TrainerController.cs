@@ -36,7 +36,7 @@ namespace G_NET_65_MVC02_PL.Controllers
         public IActionResult Create() => View();
 
         [HttpPost]
-        public async Task<IActionResult> CreateTrainer(CreateTrainerViewModel model, CancellationToken ct)
+        public async Task<IActionResult> CreateTrainer(CreateTrainerView model, CancellationToken ct)
         {
             if (!ModelState.IsValid) return View(nameof(Create), model);
             var Result = await _trainerService.CreateTrainerAsync(model, ct);

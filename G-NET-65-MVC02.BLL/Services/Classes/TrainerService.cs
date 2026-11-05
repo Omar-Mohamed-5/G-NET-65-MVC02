@@ -21,7 +21,7 @@ namespace G_NET_65_MVC02.BLL.Services.Classes
             _trainerRepository = TrainerRepository;
             _sessionRepository = SessionRepository;
         }
-        public async Task<bool> CreateTrainerAsync(CreateTrainerViewModel model, CancellationToken ct = default)
+        public async Task<bool> CreateTrainerAsync(CreateTrainerView model, CancellationToken ct = default)
         {
             var EmailExists = await _trainerRepository.AnyAsync(x => x.Email == model.Email, ct);
             var PhoneExists = await _trainerRepository.AnyAsync(x=> x.PhoneNumber == model.PhoneNumber, ct);

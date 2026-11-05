@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace G_NET_65_MVC02.BLL.ViewModels.TrainerViewModels
 {
-    public class CreateTrainerViewModel
+    public class CreateTrainerView
     {
         [Required(ErrorMessage = "Name is required")]
         [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Name can only contain letters and spaces")]
