@@ -27,6 +27,7 @@ namespace G_NET_65_MVC02_PL
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             builder.Services.AddScoped<IMemberService, MemberService>();
             builder.Services.AddScoped<IPlanService, PlanService>();
+            builder.Services.AddScoped<ITrainerService, TrainerService>();
             #endregion
 
             var app = builder.Build();

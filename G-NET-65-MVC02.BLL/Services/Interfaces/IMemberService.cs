@@ -11,7 +11,7 @@ namespace G_NET_65_MVC02.BLL.Services.Interfaces
     {
         Task<IEnumerable<MemberViewModel>> GetAllMembersAsync(CancellationToken ct = default);
         Task<MemberViewModel?> GetMemberDetailsAsync(int memberId, CancellationToken ct = default);
-        Task<bool> CreateMemberAsync(CreateMemberViewModel model, CancellationToken ct = default);
+        Task<bool> CreateMemberAsync(CreateTrainerViewModel model, CancellationToken ct = default);
         Task<MemberToUpdateViewModel?> GetMemberToUpdateAsync(int memberId, CancellationToken ct = default);
         Task<bool> UpdateMemberDetailsAsync(int memberId, MemberToUpdateViewModel model, CancellationToken ct = default);
         Task<HealthRecordViewModel?> GetMemberHealthRecordAsync(int memberId, CancellationToken ct = default);

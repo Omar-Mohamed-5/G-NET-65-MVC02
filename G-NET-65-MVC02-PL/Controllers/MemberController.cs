@@ -26,7 +26,7 @@ namespace G_NET_65_MVC02_PL.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> CreateMember(CreateMemberViewModel model, CancellationToken ct)
+        public async Task<IActionResult> CreateMember(CreateTrainerViewModel model, CancellationToken ct)
         {
             if(!ModelState.IsValid) return View(nameof(Create), model);
             var Result = await _memberService.CreateMemberAsync(model, ct);
