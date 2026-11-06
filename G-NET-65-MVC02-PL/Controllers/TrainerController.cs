@@ -34,6 +34,7 @@ namespace G_NET_65_MVC02_PL.Controllers
         [HttpGet]
         public IActionResult Create() => View();
 
+
         [HttpPost]
         public async Task<IActionResult> CreateTrainer(CreateTrainerView model, CancellationToken ct)
         {
@@ -45,7 +46,7 @@ namespace G_NET_65_MVC02_PL.Controllers
             }
             else
             {
-                TempData["ErrorMessage"] = "Trainer Failed To Create";
+                TempData["ErrorMessage"] = "Failed To Create Trainer";
             }
             return RedirectToAction(nameof(Index));
         }
