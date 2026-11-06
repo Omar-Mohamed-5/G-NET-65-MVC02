@@ -34,7 +34,7 @@ namespace G_NET_65_MVC02.BLL.Services.Classes
 
 
 
-        public async Task<bool> CreateMemberAsync(CreateTrainerViewModel model, CancellationToken ct = default)
+        public async Task<bool> CreateMemberAsync(CreateMemberViewModel model, CancellationToken ct = default)
         {
             var EmailExists = await _memberRepository.AnyAsync(x => x.Email == model.Email, ct);
 
