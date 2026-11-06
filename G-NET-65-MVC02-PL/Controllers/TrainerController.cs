@@ -17,23 +17,22 @@ namespace G_NET_65_MVC02_PL.Controllers
 
         public async Task<IActionResult> Index(CancellationToken ct)
         {
-            var trainers = await _trainerService.GetAllTrainersAsync(ct);
-            return View(trainers);
+            var Trainers = await _trainerService.GetAllTrainersAsync(ct);
+            return View(Trainers);
         }
 
 
         [HttpGet]
         public async Task<IActionResult> TrainerDetails(int id, CancellationToken ct)
         {
-            var trainer = await _trainerService.GetTrainerDetailsAsync(id, ct);
-            if (trainer is null) { TempData["ErrorMessage"] = "Trainer not found"; return RedirectToAction(nameof(Index)); }
-            return View(trainer);
+            var Trainer = await _trainerService.GetTrainerDetailsAsync(id, ct);
+            if (Trainer is null) { TempData["ErrorMessage"] = "Trainer not found"; return RedirectToAction(nameof(Index)); }
+            return View(Trainer);
         }
 
 
         [HttpGet]
         public IActionResult Create() => View();
-
 
         [HttpPost]
         public async Task<IActionResult> CreateTrainer(CreateTrainerView model, CancellationToken ct)
