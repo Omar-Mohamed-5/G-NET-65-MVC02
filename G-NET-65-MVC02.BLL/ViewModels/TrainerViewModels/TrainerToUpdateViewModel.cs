@@ -10,6 +10,8 @@ namespace G_NET_65_MVC02.BLL.ViewModels.TrainerViewModels
 {
     public class TrainerToUpdateViewModel
     {
+        public string Name { get; set; } = default!;
+
         [Required(ErrorMessage = "Email Is Required")]
         [EmailAddress(ErrorMessage = "Invalid email format")]
         public string Email { get; set; } = default!;

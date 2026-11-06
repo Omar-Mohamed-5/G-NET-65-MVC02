@@ -121,7 +121,7 @@ namespace G_NET_65_MVC02.BLL.Services.Classes
             Trainer.Specialties = model.Specialties;
 
             var Result = await _trainerRepository.UpdateAsync(Trainer);
-            return Result > 0;
+            return Result > 0 ? true : false;
         }
     }
 }

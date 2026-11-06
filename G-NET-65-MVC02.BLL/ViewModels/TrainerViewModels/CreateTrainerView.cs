@@ -19,8 +19,9 @@ namespace G_NET_65_MVC02.BLL.ViewModels.TrainerViewModels
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; } = default!;
 
-        [Required(ErrorMessage = "Phone Number is required")]
-        [RegularExpression(@"^(010|011|012|015\d){8}$", ErrorMessage = "Phone number must be a valid Egyptian mobile number")]
+        [Required(ErrorMessage = "Phone Number Is Required")]
+        [Phone(ErrorMessage = "Invalid phone number")]
+        [RegularExpression(@"^(010|011|012|015)\d{8}$", ErrorMessage = "Phone number must be a valid Egyptian mobile number")]
         [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; } = default!;
 
