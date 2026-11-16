@@ -14,11 +14,16 @@ namespace G_NET_65_MVC02.DAL.Repositories.Classes
     {
         private readonly Dictionary<string, object> _repositories = [];
         private readonly GymDBContext _dBContext;
+        private readonly ISessionRepository sessionRepository;
 
-        public UnitOfWork(GymDBContext DBContext)
+        public UnitOfWork(GymDBContext DBContext, ISessionRepository sessionRepository)
         {
             _dBContext = DBContext;
+            _SessionRepository = sessionRepository;
         }
+
+        public ISessionRepository _SessionRepository { get; }
+
         public IGenericRepository<TEntity> GenericRepository<TEntity>() where TEntity : BaseEntity, new()
         {
             var TypeName = typeof(TEntity).Name;

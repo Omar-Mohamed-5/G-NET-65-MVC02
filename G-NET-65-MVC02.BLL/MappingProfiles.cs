@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace G_NET_65_MVC02.BLL
 {
-    internal class MappingProfiles
+    public class MappingProfiles
     {
     }
 }
