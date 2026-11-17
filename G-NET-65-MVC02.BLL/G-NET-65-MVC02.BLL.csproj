@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="17.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\G-NET-65-MVC02.DAL\G-NET-65-MVC02.DAL.csproj" />
   </ItemGroup>
 

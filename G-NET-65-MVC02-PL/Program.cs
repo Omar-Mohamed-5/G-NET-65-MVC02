@@ -1,4 +1,5 @@
 using G_NET_65_MVC01.DBContexts;
+using G_NET_65_MVC02.BLL;
 using G_NET_65_MVC02.BLL.Services.Classes;
 using G_NET_65_MVC02.BLL.Services.Interfaces;
 using G_NET_65_MVC02.DAL.Repositories.Classes;
@@ -28,6 +29,9 @@ namespace G_NET_65_MVC02_PL
             builder.Services.AddScoped<IMemberService, MemberService>();
             builder.Services.AddScoped<IPlanService, PlanService>();
             builder.Services.AddScoped<ITrainerService, TrainerService>();
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddScoped<ISessionRepository, SessionRepository>();
+            builder.Services.AddAutoMapper(m => m.AddProfile(new MappingProfiles()));
             #endregion
 
             var app = builder.Build();
