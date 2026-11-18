@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace G_NET_65_MVC02.BLL.ViewModels.SessionViewModels
 {
-    internal class TrainerSelectViewModel
+    public class TrainerSelectViewModel
     {
+        public int Id { get; set; }
+        public string Name { get; set; } = default!;
     }
 }

@@ -25,6 +25,8 @@ namespace G_NET_65_MVC02.BLL
 
             CreateMap<CreateSessionViewModel, Session>();
             CreateMap<UpdateSessionViewModel, Session>().ReverseMap();
+            CreateMap<Trainer, TrainerSelectViewModel>();
+            CreateMap<Category, CategorySelectViewModel>();
         }
     }
 }
