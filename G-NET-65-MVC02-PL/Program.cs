@@ -29,6 +29,7 @@ namespace G_NET_65_MVC02_PL
             builder.Services.AddScoped<IMemberService, MemberService>();
             builder.Services.AddScoped<IPlanService, PlanService>();
             builder.Services.AddScoped<ITrainerService, TrainerService>();
+            //UnitOfWork and AutoMapper
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<ISessionRepository, SessionRepository>();
             builder.Services.AddAutoMapper(m => m.AddProfile(new MappingProfiles()));
