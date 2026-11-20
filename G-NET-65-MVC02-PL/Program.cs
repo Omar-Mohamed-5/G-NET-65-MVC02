@@ -32,6 +32,7 @@ namespace G_NET_65_MVC02_PL
             //UnitOfWork and AutoMapper
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<ISessionRepository, SessionRepository>();
+            builder.Services.AddScoped<ISessionService, SessionService>();
             builder.Services.AddAutoMapper(m => m.AddProfile(new MappingProfiles()));
             #endregion
 

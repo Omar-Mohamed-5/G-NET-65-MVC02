@@ -92,11 +92,11 @@ namespace G_NET_65_MVC02_PL.Controllers
             var Result = await _trainerService.RemoveTrainerAsync(id, ct);
             if (Result)
             {
-                TempData["SuccessMessage"] = "Member Deleted Successfully";
+                TempData["SuccessMessage"] = "Trainer Deleted Successfully";
             }
             else
             {
-                TempData["ErrorMessage"] = "Failed To Delete Member, Ensure there are no future bookings";
+                TempData["ErrorMessage"] = "Failed To Delete Trainer, Ensure There Are No Future Sessions";
             }
             return RedirectToAction(nameof(Index));
         }

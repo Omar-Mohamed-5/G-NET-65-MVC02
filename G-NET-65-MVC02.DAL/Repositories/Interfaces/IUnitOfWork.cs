@@ -11,7 +11,7 @@ namespace G_NET_65_MVC02.DAL.Repositories.Interfaces
     {
         IGenericRepository<TEntity> GenericRepository<TEntity>() where TEntity : BaseEntity, new();
         Task<int> SaveChangesAsync(CancellationToken ct = default);
-        object GetRepository<T>();
+        //object GetRepository<T>();
 
         public ISessionRepository _SessionRepository { get; }
     }
