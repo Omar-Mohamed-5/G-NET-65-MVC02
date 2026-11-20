@@ -123,7 +123,7 @@ namespace G_NET_65_MVC02_PL.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id, CancellationToken ct)
         {
             var Result = await _sessionService.DeleteSessionAsync(id, ct);
-            if(Result is not null)
+            if(Result is null)
             { 
                 TempData["SuccessMessage"] = "Session Deleted Successfully"; 
             }
