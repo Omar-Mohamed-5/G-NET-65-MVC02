@@ -5,12 +5,13 @@ using G_NET_65_MVC02.DAL.Data.DBContexts;
 using G_NET_65_MVC02.DAL.Repositories.Classes;
 using G_NET_65_MVC02.DAL.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace G_NET_65_MVC02_PL
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +38,8 @@ namespace G_NET_65_MVC02_PL
             #endregion
 
             var app = builder.Build();
+            await app.MigrateAndSeedDataAsync();
+
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
