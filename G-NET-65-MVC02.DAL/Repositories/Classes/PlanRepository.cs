@@ -1,4 +1,4 @@
-﻿using G_NET_65_MVC01.DBContexts;
+﻿using G_NET_65_MVC02.DAL.Data.DBContexts;
 using G_NET_65_MVC02.DAL.Models;
 using G_NET_65_MVC02.DAL.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;

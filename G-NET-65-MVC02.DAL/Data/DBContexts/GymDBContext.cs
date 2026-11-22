@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
-namespace G_NET_65_MVC01.DBContexts
+namespace G_NET_65_MVC02.DAL.Data.DBContexts
 {
     public class GymDBContext:DbContext
     {

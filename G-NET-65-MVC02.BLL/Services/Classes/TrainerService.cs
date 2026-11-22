@@ -86,6 +86,7 @@ namespace G_NET_65_MVC02.BLL.Services.Classes
             {
                 return new TrainerToUpdateViewModel()
                 {
+                    Name = Trainer.Name,
                     Email = Trainer.Email,
                     PhoneNumber = Trainer.PhoneNumber,
                     BuildingNumber = Trainer.Address.BuildingNumber,
