@@ -8,8 +8,8 @@ namespace G_NET_65_MVC02.BLL.Services.AttachmentService
 {
     public interface IAttachmentService
     {
-        Task<string?> UploadFileAsync(Stream FileStream, string Filename, string FolderName, CancellationToken ct = default);
-        bool Delete(string Filename, string FolderName);
-        (Stream stream, string ContentType)? GetFile(string Filename, string FolderName);
+        Task<string?> UploadFileAsync(Stream FileStream, string FileName, string FolderName, CancellationToken ct = default);
+        bool Delete(string FileName, string FolderName);
+        (Stream stream, string ContentType)? GetFile(string FileName, string FolderName);
     }
 }

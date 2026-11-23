@@ -1,4 +1,5 @@
-﻿using G_NET_65_MVC02.BLL.Services.Interfaces;
+﻿using G_NET_65_MVC02.BLL.Services.AttachmentService;
+using G_NET_65_MVC02.BLL.Services.Interfaces;
 using G_NET_65_MVC02.BLL.ViewModels.MemberViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,10 +8,12 @@ namespace G_NET_65_MVC02_PL.Controllers
     public class MemberController : Controller
     {
         private readonly IMemberService _memberService;
+        private readonly IAttachmentService _attachmentService;
 
-        public MemberController(IMemberService MemberService)
+        public MemberController(IMemberService MemberService, IAttachmentService AttachmentService)
         {
             _memberService = MemberService;
+            _attachmentService = AttachmentService;
         }
 
 
@@ -39,6 +42,19 @@ namespace G_NET_65_MVC02_PL.Controllers
                 TempData["ErrorMessage"] = "Member Failed To Create";
             }
             return RedirectToAction(nameof(Index));
+        }
+
+
+        public async Task<IActionResult> Picture(int id)
+        {
+            var member = await _memberService.GetMemberDetailsAsync(id);
+            if (member is null || string.IsNullOrEmpty(member.Photo))
+                return NotFound();
+
+            var result = _attachmentService.GetFile(member.Photo, "MembersPictures");
+            if (result is null) return NotFound();
+
+            return File(result.Value.stream, result.Value.ContentType);
         }
 
 
