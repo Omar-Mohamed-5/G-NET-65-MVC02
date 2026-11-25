@@ -2,8 +2,10 @@ using G_NET_65_MVC02.BLL;
 using G_NET_65_MVC02.BLL.Services.Classes;
 using G_NET_65_MVC02.BLL.Services.Interfaces;
 using G_NET_65_MVC02.DAL.Data.DBContexts;
+using G_NET_65_MVC02.DAL.Models;
 using G_NET_65_MVC02.DAL.Repositories.Classes;
 using G_NET_65_MVC02.DAL.Repositories.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
@@ -24,6 +26,8 @@ namespace G_NET_65_MVC02_PL
             {
                 option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<GymDBContext>().AddDefaultTokenProviders();
             //builder.Services.AddScoped<IPlanRepository, MockRepository>();
             //builder.Services.AddScoped<IPlanRepository, PlanRepository>();
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
