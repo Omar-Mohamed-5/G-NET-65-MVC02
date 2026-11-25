@@ -34,11 +34,11 @@ namespace G_NET_65_MVC02.DAL.Data.DBContexts
             modelBuilder.Entity<ApplicationUser>(EB =>
             {
                 EB.Property(x => x.FirstName)
-                .HasColumnType("varchar")
+                .HasColumnType("Varchar")
                 .HasMaxLength(50);
 
                 EB.Property(x => x .LasttName)
-                .HasColumnType("varchar")
+                .HasColumnType("Varchar")
                 .HasMaxLength(50);
             });
         }
