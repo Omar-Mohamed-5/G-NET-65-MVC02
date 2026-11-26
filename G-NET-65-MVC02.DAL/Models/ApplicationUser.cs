@@ -10,6 +10,6 @@ namespace G_NET_65_MVC02.DAL.Models
     public class ApplicationUser : IdentityUser
     {
         public string FirstName { get; set; } = default!;
-        public string LasttName { get; set; } = default!;
+        public string LastName { get; set; } = default!;
     }
 }
