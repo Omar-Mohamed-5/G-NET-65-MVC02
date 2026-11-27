@@ -26,8 +26,16 @@ namespace G_NET_65_MVC02_PL
             {
                 option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
-            builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<GymDBContext>().AddDefaultTokenProviders();
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(Config =>
+            {
+                Config.User.RequireUniqueEmail = true;
+                Config.Lockout.MaxFailedAccessAttempts = 5;
+                Config.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(2);
+            }).AddEntityFrameworkStores<GymDBContext>().AddDefaultTokenProviders();
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Account/Login";
+            });
             //builder.Services.AddScoped<IPlanRepository, MockRepository>();
             //builder.Services.AddScoped<IPlanRepository, PlanRepository>();
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
@@ -61,7 +69,7 @@ namespace G_NET_65_MVC02_PL
             app.MapStaticAssets();
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}")
+                pattern: "{controller=Account}/{action=Login}/{id?}")
                 .WithStaticAssets();
 
             app.Run();

@@ -37,7 +37,7 @@ namespace G_NET_65_MVC02.DAL.Data.DBContexts
                 .HasColumnType("Varchar")
                 .HasMaxLength(50);
 
-                EB.Property(x => x .LasttName)
+                EB.Property(x => x.LastName)
                 .HasColumnType("Varchar")
                 .HasMaxLength(50);
             });

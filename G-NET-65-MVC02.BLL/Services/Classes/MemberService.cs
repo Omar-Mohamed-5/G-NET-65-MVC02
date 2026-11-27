@@ -53,13 +53,13 @@ namespace G_NET_65_MVC02.BLL.Services.Classes
 
             if (EmailExists || PhoneExists) return false;
 
-            var Photo = await _attachmentService.UploadFileAsync(model.Photo.OpenReadStream(), model.Photo.FileName, "MembersPictures", ct);
-            if (string.IsNullOrEmpty(Photo)) return false;
-                //return Result.Validation("Profile Photo Upload Failed(Check File Type and Size)");
+            //var Photo = await _attachmentService.UploadFileAsync(model.Photo.OpenReadStream(), model.Photo.FileName, "MembersPictures", ct);
+            //if (string.IsNullOrEmpty(Photo)) return false;
+            //return Result.Validation("Profile Photo Upload Failed(Check File Type and Size)");
 
             var member = new Member
             {
-                Photo = Photo,
+                //Photo = model.Photo,
                 Name = model.Name,
                 Email = model.Email,
                 PhoneNumber = model.PhoneNumber,
@@ -80,15 +80,15 @@ namespace G_NET_65_MVC02.BLL.Services.Classes
             };
 
             var Result = await _memberRepository.AddAsync(member);
-            var result = await _unitOfWork.SaveChangesAsync(ct);
-            if(result == 0)
-            {
-                if(!string.IsNullOrEmpty(member.Photo))
-                {
-                    _attachmentService.Delete(member.Photo, "Members");
-                }
-                return false;
-            }
+            //var result = await _unitOfWork.SaveChangesAsync(ct);
+            //if(result == 0)
+            //{
+            //    if(!string.IsNullOrEmpty(member.Photo))
+            //    {
+            //        _attachmentService.Delete(member.Photo, "Members");
+            //    }
+            //    return false;
+            //}
             return Result > 0;
         }
 
@@ -187,15 +187,15 @@ namespace G_NET_65_MVC02.BLL.Services.Classes
             var HasFutureSessions = await _bookingRepository.AnyAsync(x => x.MemberId == memberId && x.Session.StartDate > DateTime.Now, ct);
             if (HasFutureSessions) return false;
             var Result = await _memberRepository.DeleteAsync(Member);
-            var result = await _unitOfWork.SaveChangesAsync(ct);
-            if(result > 0)
-            {
-                if(!string.IsNullOrEmpty(Member.Photo))
-                {
-                    _attachmentService.Delete(Member.Photo, "Members");
-                }
-                return true;
-            }
+            //var result = await _unitOfWork.SaveChangesAsync(ct);
+            //if(result > 0)
+            //{
+            //    if(!string.IsNullOrEmpty(Member.Photo))
+            //    {
+            //        _attachmentService.Delete(Member.Photo, "Members");
+            //    }
+            //    return true;
+            //}
             return Result > 0;
         }
 
