@@ -35,6 +35,7 @@ namespace G_NET_65_MVC02_PL
             builder.Services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = "/Account/Login";
+                options.AccessDeniedPath = "/Account/AccessDenied";
             });
             //builder.Services.AddScoped<IPlanRepository, MockRepository>();
             //builder.Services.AddScoped<IPlanRepository, PlanRepository>();

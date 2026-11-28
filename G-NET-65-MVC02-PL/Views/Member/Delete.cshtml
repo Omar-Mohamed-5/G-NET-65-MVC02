@@ -1,4 +1,9 @@
-﻿<div class="container mt-5">
+﻿@{
+    ViewData["Title"] = "Delete Member";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card p-5 shadow text-center">
@@ -10,7 +15,7 @@
 
                 <form asp-action="DeleteConfirmed" method="post" asp-route-id="@Context.Request.RouteValues["id"]" class="mt-4">
                     <div class="buttons d-flex justify-content-between gap-3">
-                        <a asp-controller="Members" asp-action="Index" class="btn-outline flex-fill">NO</a>
+                        <a asp-controller="Member" asp-action="Index" class="btn-outline flex-fill">NO</a>
                         <button type="submit" class="btn-fill flex-fill">Yes</button>
                     </div>
                 </form>

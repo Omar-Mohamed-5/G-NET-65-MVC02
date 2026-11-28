@@ -1,5 +1,6 @@
 ﻿using G_NET_65_MVC02.BLL.ViewModels.AccountViewModels;
 using G_NET_65_MVC02.DAL.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,6 +21,7 @@ namespace G_NET_65_MVC02_PL.Controllers
         }
 
 
+
         public IActionResult Login()
         {
             return View();
@@ -36,7 +38,7 @@ namespace G_NET_65_MVC02_PL.Controllers
                 return View(model);
             }
             var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password,
-                model.RememberMe, lockoutOnFailure:true);
+                model.RememberMe, lockoutOnFailure: true);
             if (result.Succeeded)
             {
                 _logger.LogInformation("User {UserId} Signed In", user.Id);
@@ -47,7 +49,7 @@ namespace G_NET_65_MVC02_PL.Controllers
                 _logger.LogWarning("User {UserId} Is Locked Out", user.Id);
                 ModelState.AddModelError(string.Empty, "This Account Is Temporarily Locked Try Again Later");
             }
-            else if(result.IsNotAllowed)
+            else if (result.IsNotAllowed)
             {
                 ModelState.AddModelError(string.Empty, "Sign In Not Allowed For This Account");
             }
@@ -57,5 +59,19 @@ namespace G_NET_65_MVC02_PL.Controllers
             }
             return View(model);
         }
+
+
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction(nameof(Login));
+        }
+
+
+
+        public IActionResult AccessDenied() => View();
     }
 }

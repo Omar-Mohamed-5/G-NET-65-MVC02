@@ -1,10 +1,12 @@
 ﻿using G_NET_65_MVC02.BLL.Services.AttachmentService;
 using G_NET_65_MVC02.BLL.Services.Interfaces;
 using G_NET_65_MVC02.BLL.ViewModels.MemberViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace G_NET_65_MVC02_PL.Controllers
 {
+    [Authorize(Roles = "SuperAdmin")]
     public class MemberController : Controller
     {
         private readonly IMemberService _memberService;
